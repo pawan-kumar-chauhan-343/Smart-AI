@@ -71,10 +71,10 @@
             <h2 class="text-6xl md:text-8xl font-black text-slate-900 mb-2 leading-none uppercase">
                 APRIL<br><span class="text-red-600">FOOL!</span>
             </h2>
-            <p class="text-slate-600 text-xl md:text-2xl font-bold mb-8 italic">भाई/बहन, बुरा न मानो होली... नहीं, अप्रैल फूल है! 😂</p>
+            <p class="text-slate-600 text-xl md:text-2xl font-bold mb-8 italic">बुरा न मानो होली... नहीं, अप्रैल फूल है! 😂</p>
             
             <div class="bg-slate-100 rounded-3xl p-8 shadow-inner border border-slate-200">
-                <h3 class="text-slate-800 font-bold mb-6 text-lg">अब दूसरों को भी उल्लू बनाएं! 👇</h3>
+                <h3 class="text-slate-800 font-bold mb-6 text-lg">अब दूसरों को भी Fool बनाएं! 👇</h3>
                 
                 <!-- Share Buttons Grid -->
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
@@ -88,16 +88,19 @@
                         <i class="fab fa-telegram-plane text-2xl"></i>
                         <span class="text-[10px] font-bold">Telegram</span>
                     </button>
-                    <!-- Facebook -->
-                    <button onclick="share('facebook')" class="flex flex-col items-center gap-2 p-3 bg-[#1877F2] rounded-2xl hover:opacity-90">
-                        <i class="fab fa-facebook-f text-2xl"></i>
-                        <span class="text-[10px] font-bold">Facebook</span>
-                    </button>
-                    <!-- Instagram (Copy Link fallback) -->
-                    <button onclick="share('copy')" class="flex flex-col items-center gap-2 p-3 bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] rounded-2xl hover:opacity-90">
-                        <i class="fab fa-instagram text-2xl"></i>
-                        <span class="text-[10px] font-bold">Instagram</span>
-                    </button>
+                                <!-- Female AI Image -->
+            <div class="mb-6 relative inline-block">
+                <div class="w-40 h-40 rounded-full overflow-hidden border-4 border-blue-500/50 ai-glow mx-auto bg-slate-800">
+                    <!-- User provided image with fallback -->
+                    <a href="https://youtube.com/@gopawango?si=q57otTjZfskm2ekV">
+                    <img src="https://i.ibb.co/8nPLf7q1/images.jpg" 
+                         onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=AIFemale'"
+                         alt="AI Female" 
+                         class="w-full h-full object-cover"> </a>
+                </div>
+                <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-blue-600 text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-widest">Active</div>
+            </div>
+                    <a href="https://youtube.com/@gopawango?si=1OH4UriSIVBWE3TX"><img src="https://i.ibb.co/PZLJ03fH/1768145435313.png" alt="1768145435313" border="0"></a>
                     <!-- Copy Link -->
                     <button id="copy-btn" onclick="share('copy')" class="flex flex-col items-center gap-2 p-3 bg-slate-800 rounded-2xl hover:opacity-90 col-span-2 md:col-span-1">
                         <i class="fas fa-link text-2xl"></i>
@@ -120,7 +123,7 @@
         const prankScreen = document.getElementById('prank-screen');
         const startBtn = document.getElementById('start-btn');
         const shareURL = "https://pawan-kumar-chauhan-343.github.io/Smart-AI/";
-        const shareMessage = "भाई ये AI सच में कमाल है! ये आपका दिमाग पढ़ लेती है, यकीन नहीं आता तो खुद देख लो: ";
+        const shareMessage = "AI जो आपके मन की बात बताती है";
 
         startBtn.addEventListener('click', () => {
             startBtn.textContent = "दिमाग पढ़ा जा रहा है... 🧠";

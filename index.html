@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Mind Reader - भविष्य यहाँ है</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes scan {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+        .scanner-line {
+            height: 2px;
+            background: linear-gradient(to right, transparent, #00f2fe, #4facfe, transparent);
+            animation: scan 3s linear infinite;
+        }
+        .glow-text {
+            text-shadow: 0 0 10px rgba(79, 172, 254, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-black text-white font-sans overflow-hidden">
+
+    <!-- ल्योर स्क्रीन (Lure Screen) -->
+    <div id="lure-screen" class="min-h-screen flex flex-col items-center justify-center p-6 text-center">
+        <div class="max-w-xl w-full bg-slate-900/50 backdrop-blur-lg rounded-3xl border border-blue-500/30 p-10 shadow-[0_0_50px_rgba(0,123,255,0.2)] relative overflow-hidden">
+            
+            <!-- AI स्कैनिंग इफेक्ट -->
+            <div class="absolute inset-0 scanner-line opacity-30 pointer-events-none"></div>
+
+            <div class="mb-6 flex justify-center">
+                <div class="w-20 h-20 rounded-full bg-blue-500/20 flex items-center justify-center border border-blue-400 animate-pulse">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                </div>
+            </div>
+            
+            <h1 class="text-3xl md:text-4xl font-bold mb-6 glow-text leading-tight">
+                ये AI बहुत स्मार्ट है
+            </h1>
+            
+            <p class="text-xl md:text-2xl text-blue-100 mb-8 font-medium italic">
+                "आप जो अपने मन में सोचेंगे, बटन क्लिक करने पर वही दिखेगी"
+            </p>
+            
+            <div class="space-y-4 mb-10">
+                <p class="text-sm text-slate-400 uppercase tracking-widest">निर्देश:</p>
+                <ul class="text-slate-300 text-sm space-y-2">
+                    <li>1. अपनी आँखें बंद करें और किसी एक चीज़ के बारे में सोचें</li>
+                    <li>2. उसे अपने दिमाग में साफ़ तौर पर देखें</li>
+                    <li>3. नीचे दिए गए बटन पर क्लिक करें</li>
+                </ul>
+            </div>
+
+            <button id="claim-btn" class="w-full py-5 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl text-xl font-bold uppercase tracking-widest hover:from-blue-500 hover:to-indigo-600 transition-all transform active:scale-95 shadow-lg shadow-blue-500/25">
+                मन की बात जानें
+            </button>
+        </div>
+
+        <p class="mt-8 text-slate-600 text-xs uppercase tracking-widest">Powered by Neuro-Neural AI v4.0</p>
+    </div>
+
+    <!-- प्रैंक स्क्रीन (Prank Screen) -->
+    <div id="prank-screen" class="fixed inset-0 bg-white z-50 flex-col items-center justify-center hidden">
+        <div class="animate-bounce mb-8">
+            <span class="text-8xl">🤡</span>
+        </div>
+        <h2 class="text-7xl md:text-9xl font-black text-slate-900 text-center mb-4 leading-none">
+            APRIL<br><span class="text-red-600">FOOL!</span>
+        </h2>
+        <p class="text-slate-600 text-xl md:text-2xl font-medium mb-12">बेवकूफ बनाया! मजा आया? 😂</p>
+        
+        <div class="space-y-4 text-center px-6">
+            <p class="text-slate-500 italic max-w-sm">AI आपका मन नहीं पढ़ सकता, पर आपका मजाक ज़रूर बना सकता है!</p>
+            <button onclick="location.reload()" class="px-10 py-4 bg-red-600 text-white rounded-full font-bold hover:bg-red-700 transition-colors shadow-xl">
+                किसी और को उल्लू बनाएं
+            </button>
+        </div>
+
+        <!-- कन्फ़ेटी कैनवास -->
+        <canvas id="confetti-canvas" class="absolute inset-0 pointer-events-none"></canvas>
+    </div>
+
+    <script>
+        const lureScreen = document.getElementById('lure-screen');
+        const prankScreen = document.getElementById('prank-screen');
+        const claimBtn = document.getElementById('claim-btn');
+
+        // बटन क्लिक इवेंट
+        claimBtn.addEventListener('click', () => {
+            // बटन को लोडिंग स्टेट में दिखाएं
+            claimBtn.textContent = "दिमाग पढ़ा जा रहा है...";
+            claimBtn.disabled = true;
+            
+            setTimeout(() => {
+                // प्रैंक स्क्रीन दिखाएं
+                lureScreen.classList.add('hidden');
+                prankScreen.classList.remove('hidden');
+                prankScreen.classList.add('flex');
+                startConfetti();
+            }, 1500);
+        });
+
+        // कन्फ़ेटी लॉजिक (Confetti Logic)
+        function startConfetti() {
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            let particles = [];
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#FF5733'];
+
+            for (let i = 0; i < 200; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    size: Math.random() * 8 + 4,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    speed: Math.random() * 5 + 3,
+                    angle: Math.random() * 6.28
+                });
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    ctx.fillStyle = p.color;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    p.y += p.speed;
+                    p.x += Math.sin(p.angle) * 2;
+                    p.angle += 0.1;
+
+                    if (p.y > canvas.height) {
+                        p.y = -20;
+                        p.x = Math.random() * canvas.width;
+                    }
+                });
+                requestAnimationFrame(draw);
+            }
+            draw();
+        }
+
+        window.addEventListener('resize', () => {
+            const canvas = document.getElementById('confetti-canvas');
+            if (canvas) {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+        });
+    </script>
+</body>
+</html>
+

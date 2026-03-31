@@ -3,107 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Mind Reader - भविष्य यहाँ है</title>
+    <title>Smart AI - Mind Reader</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Social Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @keyframes scan {
             0% { transform: translateY(-100%); }
             100% { transform: translateY(100%); }
         }
         .scanner-line {
-            height: 2px;
+            height: 3px;
             background: linear-gradient(to right, transparent, #00f2fe, #4facfe, transparent);
-            animation: scan 3s linear infinite;
+            animation: scan 4s linear infinite;
+            box-shadow: 0 0 15px #4facfe;
         }
-        .glow-text {
-            text-shadow: 0 0 10px rgba(79, 172, 254, 0.8);
+        .ai-glow {
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
         }
+        body { background-color: #050505; }
     </style>
 </head>
-<body class="bg-black text-white font-sans overflow-hidden">
+<body class="text-white font-sans overflow-x-hidden">
 
-    <!-- ल्योर स्क्रीन (Lure Screen) -->
-    <div id="lure-screen" class="min-h-screen flex flex-col items-center justify-center p-6 text-center">
-        <div class="max-w-xl w-full bg-slate-900/50 backdrop-blur-lg rounded-3xl border border-blue-500/30 p-10 shadow-[0_0_50px_rgba(0,123,255,0.2)] relative overflow-hidden">
+    <!-- मुख्य प्रैंक स्क्रीन (Lure Screen) -->
+    <div id="lure-screen" class="min-h-screen flex flex-col items-center justify-center p-4">
+        <div class="max-w-md w-full bg-slate-900 rounded-3xl border border-blue-500/20 p-8 text-center relative overflow-hidden shadow-2xl">
             
-            <!-- AI स्कैनिंग इफेक्ट -->
-            <div class="absolute inset-0 scanner-line opacity-30 pointer-events-none"></div>
+            <!-- Scanning Line Effect -->
+            <div class="absolute inset-0 scanner-line opacity-40 pointer-events-none"></div>
 
-            <div class="mb-6 flex justify-center">
-                <div class="w-20 h-20 rounded-full bg-blue-500/20 flex items-center justify-center border border-blue-400 animate-pulse">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
+            <!-- Female AI Image -->
+            <div class="mb-6 relative inline-block">
+                <div class="w-40 h-40 rounded-full overflow-hidden border-4 border-blue-500/50 ai-glow mx-auto bg-slate-800">
+                    <!-- User provided image with fallback -->
+                    <img src="https://i.ibb.co/8nPLf7q1/images.jpg" 
+                         onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=AIFemale'"
+                         alt="AI Female" 
+                         class="w-full h-full object-cover">
                 </div>
+                <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-blue-600 text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-widest">Active</div>
             </div>
             
-            <h1 class="text-3xl md:text-4xl font-bold mb-6 glow-text leading-tight">
-                ये AI बहुत स्मार्ट है
+            <h1 class="text-2xl md:text-3xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">
+                मैं AI हूं आपकी मन की बात बताने वाली
             </h1>
             
-            <p class="text-xl md:text-2xl text-blue-100 mb-8 font-medium italic">
-                "आप जो अपने मन में सोचेंगे, बटन क्लिक करने पर वही दिखेगी"
+            <p class="text-lg text-slate-300 mb-8 leading-relaxed">
+                "ये AI बहुत स्मार्ट है आप जो अपने मन में सोचेंगे बटन क्लिक करने पर वही दिखेगी"
             </p>
             
-            <div class="space-y-4 mb-10">
-                <p class="text-sm text-slate-400 uppercase tracking-widest">निर्देश:</p>
-                <ul class="text-slate-300 text-sm space-y-2">
-                    <li>1. अपनी आँखें बंद करें और किसी एक चीज़ के बारे में सोचें</li>
-                    <li>2. उसे अपने दिमाग में साफ़ तौर पर देखें</li>
-                    <li>3. नीचे दिए गए बटन पर क्लिक करें</li>
-                </ul>
+            <div class="bg-blue-900/20 rounded-xl p-4 mb-8 text-sm text-blue-200 border border-blue-500/10">
+                <p>💡 आँखें बंद करें, 5 सेकंड तक अपनी पसंद की चीज़ के बारे में सोचें और फिर बटन दबाएं।</p>
             </div>
 
-            <button id="claim-btn" class="w-full py-5 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl text-xl font-bold uppercase tracking-widest hover:from-blue-500 hover:to-indigo-600 transition-all transform active:scale-95 shadow-lg shadow-blue-500/25">
+            <button id="start-btn" class="w-full py-5 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-2xl text-xl font-bold hover:scale-105 transition-transform active:scale-95 shadow-[0_0_20px_rgba(37,99,235,0.4)]">
                 मन की बात जानें
             </button>
         </div>
-
-        <p class="mt-8 text-slate-600 text-xs uppercase tracking-widest">Powered by Neuro-Neural AI v4.0</p>
+        <p class="mt-6 text-slate-600 text-xs tracking-widest uppercase">Experimental AI Model v4.1</p>
     </div>
 
-    <!-- प्रैंक स्क्रीन (Prank Screen) -->
-    <div id="prank-screen" class="fixed inset-0 bg-white z-50 flex-col items-center justify-center hidden">
-        <div class="animate-bounce mb-8">
-            <span class="text-8xl">🤡</span>
-        </div>
-        <h2 class="text-7xl md:text-9xl font-black text-slate-900 text-center mb-4 leading-none">
-            APRIL<br><span class="text-red-600">FOOL!</span>
-        </h2>
-        <p class="text-slate-600 text-xl md:text-2xl font-medium mb-12">बेवकूफ बनाया! मजा आया? 😂</p>
-        
-        <div class="space-y-4 text-center px-6">
-            <p class="text-slate-500 italic max-w-sm">AI आपका मन नहीं पढ़ सकता, पर आपका मजाक ज़रूर बना सकता है!</p>
-            <button onclick="location.reload()" class="px-10 py-4 bg-red-600 text-white rounded-full font-bold hover:bg-red-700 transition-colors shadow-xl">
-                किसी और को उल्लू बनाएं
-            </button>
+    <!-- अप्रैल फूल स्क्रीन (Prank Screen) -->
+    <div id="prank-screen" class="fixed inset-0 bg-white z-50 flex-col items-center justify-center hidden p-6 overflow-y-auto">
+        <div class="text-center max-w-lg w-full">
+            <div class="text-8xl mb-4 animate-bounce">🤡</div>
+            <h2 class="text-6xl md:text-8xl font-black text-slate-900 mb-2 leading-none uppercase">
+                APRIL<br><span class="text-red-600">FOOL!</span>
+            </h2>
+            <p class="text-slate-600 text-xl md:text-2xl font-bold mb-8 italic">भाई/बहन, बुरा न मानो होली... नहीं, अप्रैल फूल है! 😂</p>
+            
+            <div class="bg-slate-100 rounded-3xl p-8 shadow-inner border border-slate-200">
+                <h3 class="text-slate-800 font-bold mb-6 text-lg">अब दूसरों को भी उल्लू बनाएं! 👇</h3>
+                
+                <!-- Share Buttons Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+                    <!-- WhatsApp -->
+                    <button onclick="share('whatsapp')" class="flex flex-col items-center gap-2 p-3 bg-[#25D366] rounded-2xl hover:opacity-90">
+                        <i class="fab fa-whatsapp text-2xl"></i>
+                        <span class="text-[10px] font-bold">WhatsApp</span>
+                    </button>
+                    <!-- Telegram -->
+                    <button onclick="share('telegram')" class="flex flex-col items-center gap-2 p-3 bg-[#0088cc] rounded-2xl hover:opacity-90">
+                        <i class="fab fa-telegram-plane text-2xl"></i>
+                        <span class="text-[10px] font-bold">Telegram</span>
+                    </button>
+                    <!-- Facebook -->
+                    <button onclick="share('facebook')" class="flex flex-col items-center gap-2 p-3 bg-[#1877F2] rounded-2xl hover:opacity-90">
+                        <i class="fab fa-facebook-f text-2xl"></i>
+                        <span class="text-[10px] font-bold">Facebook</span>
+                    </button>
+                    <!-- Instagram (Copy Link fallback) -->
+                    <button onclick="share('copy')" class="flex flex-col items-center gap-2 p-3 bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] rounded-2xl hover:opacity-90">
+                        <i class="fab fa-instagram text-2xl"></i>
+                        <span class="text-[10px] font-bold">Instagram</span>
+                    </button>
+                    <!-- Copy Link -->
+                    <button id="copy-btn" onclick="share('copy')" class="flex flex-col items-center gap-2 p-3 bg-slate-800 rounded-2xl hover:opacity-90 col-span-2 md:col-span-1">
+                        <i class="fas fa-link text-2xl"></i>
+                        <span class="text-[10px] font-bold" id="copy-text">Copy Link</span>
+                    </button>
+                </div>
+
+                <button onclick="location.reload()" class="text-blue-600 font-bold text-sm underline">फिर से खेलें</button>
+            </div>
         </div>
 
-        <!-- कन्फ़ेटी कैनवास -->
         <canvas id="confetti-canvas" class="absolute inset-0 pointer-events-none"></canvas>
     </div>
+
+    <!-- Hidden Input for Copy -->
+    <input type="text" id="share-url" value="https://pawan-kumar-chauhan-343.github.io/Smart-AI/" class="hidden">
 
     <script>
         const lureScreen = document.getElementById('lure-screen');
         const prankScreen = document.getElementById('prank-screen');
-        const claimBtn = document.getElementById('claim-btn');
+        const startBtn = document.getElementById('start-btn');
+        const shareURL = "https://pawan-kumar-chauhan-343.github.io/Smart-AI/";
+        const shareMessage = "भाई ये AI सच में कमाल है! ये आपका दिमाग पढ़ लेती है, यकीन नहीं आता तो खुद देख लो: ";
 
-        // बटन क्लिक इवेंट
-        claimBtn.addEventListener('click', () => {
-            // बटन को लोडिंग स्टेट में दिखाएं
-            claimBtn.textContent = "दिमाग पढ़ा जा रहा है...";
-            claimBtn.disabled = true;
+        startBtn.addEventListener('click', () => {
+            startBtn.textContent = "दिमाग पढ़ा जा रहा है... 🧠";
+            startBtn.classList.add('opacity-75');
             
             setTimeout(() => {
-                // प्रैंक स्क्रीन दिखाएं
                 lureScreen.classList.add('hidden');
                 prankScreen.classList.remove('hidden');
                 prankScreen.classList.add('flex');
                 startConfetti();
-            }, 1500);
+            }, 2000);
         });
 
-        // कन्फ़ेटी लॉजिक (Confetti Logic)
+        // Share Functionality
+        function share(platform) {
+            const fullMessage = encodeURIComponent(shareMessage + shareURL);
+            let url = "";
+
+            switch(platform) {
+                case 'whatsapp':
+                    url = `https://api.whatsapp.com/send?text=${fullMessage}`;
+                    window.open(url, '_blank');
+                    break;
+                case 'telegram':
+                    url = `https://t.me/share/url?url=${encodeURIComponent(shareURL)}&text=${encodeURIComponent(shareMessage)}`;
+                    window.open(url, '_blank');
+                    break;
+                case 'facebook':
+                    url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareURL)}`;
+                    window.open(url, '_blank');
+                    break;
+                case 'copy':
+                    const copyText = document.getElementById("share-url");
+                    copyText.classList.remove('hidden');
+                    copyText.select();
+                    copyText.setSelectionRange(0, 99999);
+                    document.execCommand("copy");
+                    copyText.classList.add('hidden');
+                    
+                    const btnLabel = document.getElementById('copy-text');
+                    const oldLabel = btnLabel.textContent;
+                    btnLabel.textContent = "Copied! ✅";
+                    setTimeout(() => btnLabel.textContent = oldLabel, 2000);
+                    break;
+            }
+        }
+
+        // Confetti Logic
         function startConfetti() {
             const canvas = document.getElementById('confetti-canvas');
             const ctx = canvas.getContext('2d');
@@ -111,16 +176,17 @@
             canvas.height = window.innerHeight;
 
             let particles = [];
-            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#FF5733'];
+            const colors = ['#ef4444', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899'];
 
-            for (let i = 0; i < 200; i++) {
+            for (let i = 0; i < 150; i++) {
                 particles.push({
                     x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height - canvas.height,
+                    y: Math.random() * canvas.height - 100,
                     size: Math.random() * 8 + 4,
                     color: colors[Math.floor(Math.random() * colors.length)],
-                    speed: Math.random() * 5 + 3,
-                    angle: Math.random() * 6.28
+                    speedY: Math.random() * 5 + 2,
+                    speedX: Math.random() * 4 - 2,
+                    rot: Math.random() * 360
                 });
             }
 
@@ -128,18 +194,17 @@
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 particles.forEach(p => {
                     ctx.fillStyle = p.color;
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                    ctx.fill();
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.rot * Math.PI / 180);
+                    ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
+                    ctx.restore();
 
-                    p.y += p.speed;
-                    p.x += Math.sin(p.angle) * 2;
-                    p.angle += 0.1;
+                    p.y += p.speedY;
+                    p.x += p.speedX;
+                    p.rot += 5;
 
-                    if (p.y > canvas.height) {
-                        p.y = -20;
-                        p.x = Math.random() * canvas.width;
-                    }
+                    if (p.y > canvas.height) p.y = -20;
                 });
                 requestAnimationFrame(draw);
             }
